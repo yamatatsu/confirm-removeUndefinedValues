@@ -1,14 +1,24 @@
-# Welcome to your CDK TypeScript project
+# AWS SDK for JavaScript V3 の挙動を味わうリポジトリ
 
-This is a blank project for TypeScript development with CDK.
+## Overview
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
+DynamoDB の DocumentClient の put で、`{ hoge: undefined }`のような明示的な undefined を渡すとエラーが発生する。
 
-## Useful commands
+オプションで `{ removeUndefinedValues: true }` をつけるとエラーにならずに key 自体が無きものとして put される。
 
-* `npm run build`   compile typescript to js
-* `npm run watch`   watch for changes and compile
-* `npm run test`    perform the jest unit tests
-* `cdk deploy`      deploy this stack to your default AWS account/region
-* `cdk diff`        compare deployed stack with current state
-* `cdk synth`       emits the synthesized CloudFormation template
+## Deploy
+
+```console
+npm i
+npx cdk deploy
+```
+
+## Confirm
+
+```console
+# v2ではエラーにならない
+npx ts-node confirm-scripts/v2.ts
+
+# v3ではエラーになる
+npx ts-node confirm-scripts/v2.ts
+```
